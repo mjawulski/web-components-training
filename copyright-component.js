@@ -4,12 +4,14 @@ template.innerHTML = `
 .container{
     text-align: center;
     width: 100%;
-
+}
+.hidden{
+    display: none;
 }
 </style>
 
 <div class="container">
-  &copy; My awesome company 2019
+  &copy; My awesome company 2019 <span id="secret-emoji" class="hidden">🤓</span>
 </div>
 `;
 
@@ -21,6 +23,18 @@ class CopyrightNotice extends HTMLElement {
     this.attachShadow({ mode: 'open' });
 
     this.shadowRoot.appendChild(templateClone);
+
+    let contentElement = this.shadowRoot.querySelector('.container');
+    contentElement.addEventListener('click', this.showEmoji);
+  }
+
+  showEmoji() {
+    const emoji = this.querySelector('#secret-emoji');
+    if (emoji.classList.contains('hidden')) {
+      emoji.classList.remove('hidden');
+    } else {
+      emoji.classList.add('hidden');
+    }
   }
 }
 
